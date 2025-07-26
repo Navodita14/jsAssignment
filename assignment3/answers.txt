@@ -1,0 +1,281 @@
+1.  Explain the difference between null and undefined in JavaScript.
+    
+    Undefined: A variable has been declared, but no value has been assigned yet. It’s the value JavaScript automatically
+    gives to uninitialized variables.
+    
+    let a;
+    console.log(a); // undefined
+
+    Null: A variable is intentionally assigned the absence of any value.You use it when you want to say, “this should hold something, but right now it doesn’t.”
+    let b = null;
+    console.log(b); // null
+
+                    undefined               |	null
+    Type            undefined	            |	object 
+    Assigned by	    JavaScript engine       |   Developer
+    Intent	        Missing / uninitialized |	Explicit absence of value
+
+2.  Use null when you want to intentionally indicate that a variable has no value. Use undefined when a variable 
+    has been declared but not initialized.
+    
+    For example, setting an object property to null to indicate "no value," 
+    whereas missing properties are undefined.
+
+3.  The Event Loop is like a controller inside JavaScript. It keeps an eye on that's happening in code (the call stack) and when it is free, 
+    the Event Loop steps in and takes the next task from the queue to handle. 
+
+4.  The Call Stack is like a to-do list of functions JavaScript is currently working on.
+    The Callback Queue holds tasks waiting to run after current tasks finish.
+    The Event Loop keeps checking and moves tasks from the queue to the stack when the stack is empty.
+
+5.  Hoisting is JavaScript’s way of lifting declarations to the top of their scope.
+    Function declarations are fully hoisted and can be called before you write them. 
+    Variables declared with var are hoisted as undefined.   
+    Variables declared with let and const are hoisted but stay uninitialized until their actual line, meaning trying to access them too early 
+    causes errors.
+
+6.  Undefined
+    error : uninitialized variable accessed let is not initialised in Hoisting
+
+    if error is removed: 
+    
+    console.log(a); // undefined
+    var a = 5;
+    let b = 10;
+    console.log(b); //10
+    myFunction(); // "Hello from myFunction"
+    function myFunction() { console.log("Hello from myFunction"); }
+    anotherFunction(); 
+    var anotherFunction = function() { console.log("Hello from anotherFunction"); };
+
+    anotherFunction is not initialised as function yet
+
+7.  Global Scope: Variables accessible everywhere.
+    Function Scope: Variables inside a function only visible inside that function.
+    Block Scope: Variables inside {} (like in an if statement) only visible there if declared with let or const because var is function scoped so can
+    be accesed outside block.
+
+8.  3
+    2
+    1
+    20
+    10
+
+9.  == compares values only, so 0 == false is true.
+    === compares both type and value, so 0 === false is false.
+
+10. true
+    true
+    true
+    true
+    true
+    false
+    true
+
+11. Array.isArray(variable)
+    variable instanceof Array.
+
+12. A closure is when a function “remembers” the variables from its outer scope, even after that scope has finished executing.
+    Example:
+    function outer() {
+        let count = 0;
+        return function inner() {
+            count++;
+            return count;
+        };
+    }
+    const counter = outer();
+    console.log(counter()); // 1
+    console.log(counter()); // 2
+
+13. 1
+    2
+    1
+    2
+    1
+
+14. Function declaration: Just defining your function, it can be called before declaration because of hoisting
+    greet(); 
+    function greet() {
+      console.log('Hello!');
+    }
+
+    Function expression: You assign a function to a variable. You can't call it before it's assigned, or you'll get an error,
+    because only the variable declaration is hoisted, not the function.
+    const greet = function() {
+      console.log('Hello!');
+    };
+    greet();
+
+15. Use arrow functions when:
+    You want to preserve the this context from the enclosing scope.
+    You need concise syntax for functions without their own this, arguments, super, or new.target.
+    
+    Main difference regarding this:
+    Arrow functions do not have their own this. They inherit this from the surrounding lexical scope.
+    Regular functions do have their own this, which depends on how they are invoked.
+
+16. Default binding (Global or undefined):
+    When a function is called in the global scope or as a regular function, this is either the global object (window in browsers) or undefined in 
+    strict mode.
+    Example:
+    function show() {
+      console.log(this);
+    }
+    show();
+    Method binding (Object method):
+    When a function is called as a property of an object, this refers to that object.
+    Example:  
+    const obj = {   
+     name: 'Alice',
+     greet: function() {
+     console.log(this.name);
+     }
+    };
+    obj.greet(); // 'Alice'
+
+    Explicit binding (call(), apply(), bind()):
+    You can explicitly set this when invoking a function using these methods:
+    Examples:  
+    function greet() {
+        console.log(this.name);
+    }
+
+    const person = { name: 'Bob' };
+
+    greet.call(person); // 'Bob'
+    greet.apply(person); // 'Bob'
+
+    const boundGreet = greet.bind(person);
+    boundGreet(); // 'Bob'
+    Arrow functions (Lexical this):
+    Arrow functions do not have their own this. Instead, they inherit this from the surrounding lexical scope where they are defined.
+    Example:  
+    const obj = {
+      name: 'Alice',
+      greet: () => {
+        console.log(this.name); // `this` is inherited from outer scope, likely undefined
+      }
+    };
+    obj.greet(); // undefined
+
+17. Hello, my name is Alice
+    Hello, my name is result
+    Hello, my name is Bob
+    Goodbye, my name is result
+
+18. To dynamically add a property to an object and access it using a variable:
+
+    Adding a property:
+    You can add a property to an object using dot notation if the property name is known, or bracket notation if it's stored in a variable.
+
+    Accessing the property:
+    If the property name is stored in a variable, you must use bracket notation to access it.
+
+    Example:
+    const obj = {}; // empty object
+    const propName = 'age'; // property name stored in variable
+    obj[propName] = 30;
+    console.log(obj); // { age: 30 }
+    console.log(obj[propName]); // 30
+
+19. 1. map()
+    Purpose:
+    Creates a new array by applying a provided function to each element of the original array.
+    Use case:
+    When you want to transform each item in an array into a new form.
+    Example:
+    const numbers = [1, 2, 3, 4];
+    const squares = numbers.map(num => num * num);
+    // squares: [1, 4, 9, 16]
+
+    2. filter()
+    Purpose:
+    Creates a new array containing only the elements that satisfy a given condition (predicate function).
+    Use case:
+    When you want to select a subset of elements based on some criteria.    
+    Example:
+    const numbers = [1, 2, 3, 4, 5];
+    const evens = numbers.filter(num => num % 2 === 0);
+    // evens: [2, 4]
+
+    3. reduce()
+    Purpose:
+    Reduces the array to a single value by applying a reducer function that accumulates results.
+    Use case:
+    When you want to accumulate or aggregate data (like sum, product, or building an object).
+    Example:
+    const numbers = [1, 2, 3, 4];
+    const sum = numbers.reduce((accumulator, current) => accumulator + current, 0);
+    // sum: 10
+
+20. 12
+
+21. Array destructuring is a syntax in JavaScript that allows you to unpack values from arrays into individual variables in a concise way.
+    Example:
+    const numbers = [10, 20, 30];
+    const [first, second, third] = numbers;
+    console.log(first);  // 10
+    console.log(second); // 20
+    console.log(third);  // 30
+    Use case:
+        It's useful for extracting multiple values from an array without accessing each index manually.
+
+22. Promises help address the issue of callback hell or callback pyramid of doom, where multiple nested callbacks make code hard
+    to read, maintain, and debug. 
+    Promises provide a cleaner, more manageable way to handle asynchronous operations by allowing chaining (then()) instead of
+    deeply nested callbacks, making asynchronous code more linear and easier to follow.
+    Example:
+
+    Instead of:
+    asyncOperation1(function(result1) {
+        asyncOperation2(result1, function(result2) {
+            asyncOperation3(result2, function(result3) {
+                //...
+            });
+        });
+    });
+
+    You can write:
+    asyncOperation1()
+        .then(result1 => asyncOperation2(result1))
+        .then(result2 => asyncOperation3(result2))
+        .then(result3 => {
+            // handle final result
+    });
+
+23. 
+    Feature	    Promise.all()	                   | Promise.race()
+    Purpose 	Waits for all promises to resolve  | Resolves or rejects as soon as any promise settles (resolves or rejects)
+
+    Returns 	A new promise with an array of     | A new promise with the value/reason of the first settled promise
+                results of all input promises	   |
+
+    Behavior on If any promise rejects, the entire | Resolves or rejects with the first promise to settle (resolve or reject)
+    rejection   Promise.all() rejects immediately  |		
+
+    Use case	When you need all promises to      | When you care about the first promise to complete
+                succeed before proceeding	       |
+
+24. Fetched data: 
+    Object {userId: 1, id: 1, title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit", body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut…"}
+    body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto"
+    id: 1
+    title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+    userId: 1
+    [[Prototype]]: Object
+
+25. Start
+    End
+    Promise 1
+    Timeout 1
+    Timeout 2
+
+26. You can use document.getElementById() to select the element, then use addEventListener() to attach a click event
+
+27. Event Capturing:
+    The process where the event moves downward from the window or document to the target element. The event is captured at each parent element 
+    before reaching the target.
+    Event Bubbling:
+    The process where the event propagates upward from the target element back through its ancestors to the window or document. This is the default 
+    phase for most events.
